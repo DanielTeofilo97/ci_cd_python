@@ -10,7 +10,14 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh 'docker run my-flask-app python -m pytest app/tests/'
+        sh 'docker run --name teste-poc my-flask-app python -m pytest app/tests/'
+      }
+    }
+    stage('Stop Container Teste') {
+      steps {
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'docker rm teste-poc || true'
+        }
       }
     }
     stage('Deploy') {
