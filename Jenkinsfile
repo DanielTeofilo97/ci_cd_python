@@ -23,11 +23,9 @@ pipeline {
     }
     stage('Stop Container') {
       steps {
-        try {
-            sh 'docker stop python-poc'
-            sh 'docker rm python-poc'
-        } catch (Exception e) {
-             echo 'Exception occurred: ' + e.toString()
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'docker stop python-poc || true'
+          sh 'docker rm python-poc || true'
         }
       }
     }
