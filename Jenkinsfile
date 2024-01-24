@@ -21,6 +21,11 @@ pipeline {
         }
       }
     }
+    stage('Run') {
+      steps {
+        sh 'docker run -d -p 8080:80 $DOCKER_REGISTRY/$DOCKER_BFLASK_IMAGE'
+      }
+    }
   }
   post {
     always {
