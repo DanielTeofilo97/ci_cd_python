@@ -23,7 +23,7 @@ pipeline {
     }
     stage('Run') {
       steps {
-        sh 'docker run -d -p 3000:8080 feitordaniel97/ci_cd_python'
+        sh 'docker run -d -p 3000:3000 feitordaniel97/ci_cd_python'
       }
     }
   }
