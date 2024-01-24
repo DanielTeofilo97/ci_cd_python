@@ -11,8 +11,6 @@ pipeline {
     stage('Test') {
       steps {
         sh 'docker run my-flask-app python -m pytest app/tests/'
-        sh 'docker stop my-flask-app'
-        sh 'docker rm my-flask-app'
       }
     }
     stage('Deploy') {
