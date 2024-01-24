@@ -11,6 +11,8 @@ pipeline {
     stage('Test') {
       steps {
         sh 'docker run my-flask-app python -m pytest app/tests/'
+        sh 'docker stop my-flask-app'
+        sh 'docker rm my-flask-app'
       }
     }
     stage('Deploy') {
@@ -21,9 +23,15 @@ pipeline {
         }
       }
     }
+    stage('Stop Container') {
+      steps {
+        sh 'docker stop python-poc'
+        sh 'docker rm python-poc'
+      }
+    }
     stage('Run') {
       steps {
-        sh 'docker run -d -p 5000:5000 feitordaniel97/ci_cd_python'
+        sh 'docker run -d --name python-poc -p 5000:5000 feitordaniel97/ci_cd_python'
       }
     }
   }
